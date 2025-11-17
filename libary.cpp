@@ -12,7 +12,7 @@ public:
     Book(int i, string t, string a) : id(i), title(t), author(a), issued(false) {}
 
     int getID() const { return id; }
-    bool isIssued() const { return issued; }
+    bool isissued() const { return issued; }
     void issue() { issued = true; }
     void ret() { issued = false; }
 
@@ -43,10 +43,10 @@ public:
 };
 
 
-class RareBook : public Book {
+class Rarebook : public Book {
 public:
-    RareBook() {}
-    RareBook(int i, string t, string a) : Book(i, t, a) {}
+    Rarebook() {}
+    Rarebook(int i, string t, string a) : Book(i, t, a) {}
 
     void display() const override {
         cout << id << " | " << title << " | " << author
@@ -55,7 +55,7 @@ public:
 };
 
 template <typename T>
-void showBooks(T arr[], int count) {
+void showbooks(T arr[], int count) {
     for (int i = 0; i < count; i++)
         arr[i].display();
 }
@@ -66,14 +66,14 @@ public:
     Book books[200];
     int count = 0;
 
-    void addBook() {
+    void addbook() {
         int id, type;
         string title, author;
 
         cout << "Enter Book ID: ";
         cin >> id;
 
-        if (cin.fail()) { handleInputError(); return; }
+        if (cin.fail()) { handleinputerror(); return; }
 
         cin.ignore();
         cout << "Title: ";
@@ -84,21 +84,21 @@ public:
         cout << "Type (1: Normal, 2: Rare): ";
         cin >> type;
 
-        if (cin.fail()) { handleInputError(); return; }
+        if (cin.fail()) { handleinputerror(); return; }
 
         if (type == 1) books[count] = Book(id, title, author);
-        else books[count] = RareBook(id, title, author);
+        else books[count] = Rarebook(id, title, author);
 
         count++;
         cout << "Book Added Successfully.\n";
     }
 
-    void searchBook() {
+    void searchbook() {
         int id;
         cout << "Enter Book ID: ";
         cin >> id;
 
-        if (cin.fail()) { handleInputError(); return; }
+        if (cin.fail()) { handleinputerror(); return; }
 
         for (int i = 0; i < count; i++) {
             if (books[i].getID() == id) {
@@ -109,16 +109,16 @@ public:
         cout << "Book Not Found.\n";
     }
 
-    void issueBook() {
+    void issuebook() {
         int id;
         cout << "Enter Book ID to Issue: ";
         cin >> id;
 
-        if (cin.fail()) { handleInputError(); return; }
+        if (cin.fail()) { handleinputerror(); return; }
 
         for (int i = 0; i < count; i++) {
             if (books[i].getID() == id) {
-                if (books[i].isIssued())
+                if (books[i].isissued())
                     cout << "Book Already Issued.\n";
                 else {
                     books[i].issue();
@@ -130,16 +130,16 @@ public:
         cout << "Book Not Found.\n";
     }
 
-    void returnBook() {
+    void returnbook() {
         int id;
         cout << "Enter Book ID to Return: ";
         cin >> id;
 
-        if (cin.fail()) { handleInputError(); return; }
+        if (cin.fail()) { handleinputerror(); return; }
 
         for (int i = 0; i < count; i++) {
             if (books[i].getID() == id) {
-                if (!books[i].isIssued())
+                if (!books[i].isissued())
                     cout << "Book Was Not Issued.\n";
                 else {
                     books[i].ret();
@@ -151,7 +151,7 @@ public:
         cout << "Book Not Found.\n";
     }
 
-    void saveToFile() {
+    void savefile() {
         ofstream fout("library.txt");
         for (int i = 0; i < count; i++)
             fout << books[i].serialize();
@@ -159,7 +159,7 @@ public:
         cout << "Data Saved.\n";
     }
 
-    void loadFromFile() {
+    void loadfile() {
         ifstream fin("library.txt");
         if (!fin) return;
 
@@ -171,15 +171,15 @@ public:
         fin.close();
     }
 
-    void showAll() {
+    void showall() {
         if (count == 0)
             cout << "No Books Available.\n";
         else
-            showBooks(books, count);
+            showbooks(books, count);
     }
 
 public:
-    void handleInputError() {
+    void handleinputerror() {
         cin.clear();
         cin.ignore(1000, '\n');
         cout << "Invalid Input! Returning to Menu.\n";
@@ -189,16 +189,11 @@ public:
 
 int main() {
     Library lib;
-    lib.loadFromFile();
+    lib.loadfile();
 
     while (true) {
-        cout << "\n========== LIBRARY MENU ==========\n";
-        cout << "1. Add Book\n"
-             << "2. Search Book\n"
-             << "3. Issue Book\n"
-             << "4. Return Book\n"
-             << "5. Show All Books\n"
-             << "6. Save & Exit\n";
+        cout << "\n LIBRARY MENU \n";
+        cout << "1. Add Book\n"<< "2. Search Book\n" << "3. Issue Book\n"<< "4. Return Book\n" << "5. Show All Books\n" << "6. Save & Exit\n";
         cout << "Enter Choice: ";
 
         int ch;
@@ -212,12 +207,12 @@ int main() {
         }
 
         switch (ch) {
-        case 1: lib.addBook(); break;
-        case 2: lib.searchBook(); break;
-        case 3: lib.issueBook(); break;
-        case 4: lib.returnBook(); break;
-        case 5: lib.showAll(); break;
-        case 6: lib.saveToFile(); return 0;
+        case 1: lib.addbook(); break;
+        case 2: lib.searchbook(); break;
+        case 3: lib.issuebook(); break;
+        case 4: lib.returnbook(); break;
+        case 5: lib.showall(); break;
+        case 6: lib.savefile(); return 0;
         default: cout << "Invalid Choice!\n";
         }
     }
